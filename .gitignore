@@ -1,0 +1,54 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node.js
+node_modules/
+.pnpm-debug.log*
+.nyc_output/
+
+# Tailwind CSS Generated Files
+dist/
+*.css.map
+
+# Temporary files
+.DS_Store
+Thumbs.db
+
+# Editor Directories and Files
+.idea/
+.vscode/
+*.swp
+
+# macOS-specific files
+._*
+.Spotlight-V100
+.Trashes
+
+# Optional npm cache
+.npm/
+.package-lock.json
+
+# Linting Files
+.eslintcache
+stylelintcache
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Build output
+public/
+out/
+
+# Ignore parcel and webpack cache
+.cache/
+.parcel-cache/
+.webpack-cache/
+
+# Git Metadata
+*.rej
