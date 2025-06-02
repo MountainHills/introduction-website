@@ -717,13 +717,16 @@ video {
   clear: none;
 }
 
-.my-16{
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-}
-
 .mb-2{
   margin-bottom: 0.5rem;
+}
+
+.mb-8{
+  margin-bottom: 2rem;
+}
+
+.mt-16{
+  margin-top: 4rem;
 }
 
 .mt-2{
@@ -841,24 +844,20 @@ video {
   height: 100vh;
 }
 
-.w-1\/12{
-  width: 8.333333%;
-}
-
-.w-2\/12{
+.w-1\/6{
   width: 16.666667%;
 }
 
-.w-3\/12{
-  width: 25%;
-}
-
-.w-3\/5{
-  width: 60%;
-}
-
-.w-4\/12{
+.w-2\/6{
   width: 33.333333%;
+}
+
+.w-3\/6{
+  width: 50%;
+}
+
+.w-4\/5{
+  width: 80%;
 }
 
 .w-\[this-is\\\\\]{
@@ -2068,6 +2067,11 @@ video {
   line-height: 2.5rem;
 }
 
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-xl{
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -2608,6 +2612,30 @@ video {
 }
 
 @media (min-width: 640px){
+  .sm\:table-cell{
+    display: table-cell;
+  }
+
+  .sm\:w-1\/12{
+    width: 8.333333%;
+  }
+
+  .sm\:w-2\/12{
+    width: 16.666667%;
+  }
+
+  .sm\:w-3\/12{
+    width: 25%;
+  }
+
+  .sm\:w-4\/12{
+    width: 33.333333%;
+  }
+
+  .sm\:w-5\/6{
+    width: 83.333333%;
+  }
+
   .sm\:text-2xl{
     font-size: 1.5rem;
     line-height: 2rem;
@@ -2618,8 +2646,23 @@ video {
     line-height: 1;
   }
 
+  .sm\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
   .sm\:underline{
     text-decoration-line: underline;
+  }
+}
+
+@media (min-width: 1024px){
+  .lg\:mb-16{
+    margin-bottom: 4rem;
+  }
+
+  .lg\:w-4\/6{
+    width: 66.666667%;
   }
 }
 
