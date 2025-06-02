@@ -19,53 +19,67 @@
           ><p class="text-xl font-light hover:cursor-pointer">Mission</p>
         </a>
       </header>
-      <section id="title " class="my-16">
+      <section id="title " class="mt-16 mb-8 lg:mb-16">
         <h1 class="text-4xl text-center mb-2">Favorite Restaurants</h1>
-        <h3 class="text-xl sm:text-2xl font-light text-center">
+        <h3 class="text-base sm:text-xl font-light text-center">
           Ranking all the restaurants I've been through.
         </h3>
       </section>
       <section class="w-full flex justify-center">
         <div
-          class="overflow-hidden border rounded-lg border-gray-300 w-3/5 shadow-md"
+          class="overflow-hidden border rounded-lg border-gray-300 w-4/5 sm:w-5/6 lg:w-4/6 shadow-md"
         >
           <table class="table-auto w-full font-light">
             <thead class="bg-darkerWhite">
               <tr>
-                <th scope="col" class="p-4 text-center w-1/12">Rank</th>
-                <th scope="col" class="p-4 text-left w-4/12">Name</th>
-                <th scope="col" class="p-4 text-left w-3/12">Cuisine</th>
-                <th scope="col" class="p-4 text-left w-2/12">Location</th>
-                <th scope="col" class="p-4 text-center w-2/12">Rating</th>
+                <th scope="col" class="p-4 text-center w-1/6 sm:w-1/12">
+                  Rank
+                </th>
+                <th scope="col" class="p-4 text-left w-3/6 sm:w-4/12">Name</th>
+                <th
+                  scope="col"
+                  class="p-4 text-left hidden sm:table-cell sm:w-3/12"
+                >
+                  Cuisine
+                </th>
+                <th
+                  scope="col"
+                  class="p-4 text-left hidden sm:table-cell sm:w-2/12"
+                >
+                  Location
+                </th>
+                <th scope="col" class="p-4 text-center w-2/6 sm:w-2/12">
+                  Rating
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr class="border-y border-gray-300">
                 <th scope="row" class="p-4">🥇</th>
                 <td class="p-4">Hungry Homies</td>
-                <td class="p-4">Burger Joint</td>
-                <td class="p-4">Makati</td>
+                <td class="p-4 hidden sm:table-cell">Burger Joint</td>
+                <td class="p-4 hidden sm:table-cell">Makati</td>
                 <td class="p-4 text-center">9.5 🌟</td>
               </tr>
               <tr class="border-y border-gray-300">
                 <th class="p-4" scope="row">🥈</th>
                 <td class="p-4">SEVA Dining</td>
-                <td class="p-4">Steak</td>
-                <td class="p-4">San Juan</td>
+                <td class="p-4 hidden sm:table-cell">Steak</td>
+                <td class="p-4 hidden sm:table-cell">San Juan</td>
                 <td class="p-4 text-center">8.5 🌟</td>
               </tr>
               <tr class="border-y border-gray-300">
                 <th scope="row" class="p-4">🥉</th>
                 <td class="p-4">Mamou</td>
-                <td class="p-4">Steak</td>
-                <td class="p-4">Taguig</td>
+                <td class="p-4 hidden sm:table-cell">Steak</td>
+                <td class="p-4 hidden sm:table-cell">Taguig</td>
                 <td class="p-4 text-center">8.25 🌟</td>
               </tr>
               <tr class="border-y border-gray-300">
                 <th scope="row" class="p-4">4</th>
                 <td class="p-4">Manam</td>
-                <td class="p-4">Filipino</td>
-                <td class="p-4">Taguig</td>
+                <td class="p-4 hidden sm:table-cell">Filipino</td>
+                <td class="p-4 hidden sm:table-cell">Taguig</td>
                 <td class="p-4 text-center">8 🌟</td>
               </tr>
             </tbody>
