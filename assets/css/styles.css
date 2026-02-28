@@ -1,0 +1,323 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f5f0eb;
+  --surface: #ede8e3;
+  --border: #d8d0c8;
+  --text: #2a2420;
+  --muted: #7a6f68;
+  --accent: #8b3a52;
+  --link: #8b3a52;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  line-height: 1.75;
+  padding: 4rem 1.5rem 6rem;
+}
+
+main {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 4rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02rem;
+}
+
+header nav {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+header nav a {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  color: var(--accent);
+}
+
+header nav a.active {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.header-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+header .tagline {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  max-width: 480px;
+}
+
+/* ---- Sections ---- */
+section {
+  margin-bottom: 3rem;
+}
+
+section h2 {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.12rem;
+}
+
+/* ---- Work ---- */
+.work-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.work-item {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.work-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.work-left .company {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.work-left .role {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* white-space prevents creation of new line & flex-shrink: 0 forces it to stay the same size */
+.work-right {
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.work-bullets {
+  margin-top: 0.75rem;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+}
+
+.work-bullets li {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Positioning the custom bullet points (the pseudo-element) */
+.work-bullets li::before {
+  content: "-";
+  left: -1.1rem;
+  position: absolute;
+  line-height: 1.6;
+}
+
+/* ---- Projects ---- */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.project-item {
+  padding: 1rem 1.1rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.project-item .project-title {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.project-item .project-title a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.project-item .project-title a:hover {
+  text-decoration: underline;
+}
+
+.project-item .project-description {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.project-item .project-tags {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--border);
+  border-radius: 3px;
+  color: var(--muted);
+}
+
+/* ---- Contact ---- */
+.contact-list {
+  display: flex;
+  flex-direction: wrap;
+  gap: 1.5rem;
+}
+
+.contact-links a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--link);
+}
+
+.contact-links a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Coming Soon ---- */
+.coming-soon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.status-line {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.status-line::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.coming-soon h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02rem;
+  margin-bottom: 0.75rem;
+}
+
+.coming-soon p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+
+.divider {
+  width: 2rem;
+  height: 1px;
+  background-color: var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.back-link {
+  font-size: 0.85rem;
+  color: var(--link);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.back-link::before {
+  content: "← ";
+}
+
+/* ---- Footer ---- */
+footer {
+  margin-top: 5rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+@media (max-width: 500px) {
+  .header-top {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

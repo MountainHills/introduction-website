@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+
+  <!-- Background box matching logo's surface color -->
+  <rect x="0" y="0" width="64" height="64" rx="12" fill="#ede8e3" stroke="#d8d0c8" stroke-width="1.5"/>
+
+  <!-- A in accent -->
+  <text
+    x="4"
+    y="46"
+    font-family="Georgia, serif"
+    font-size="38"
+    font-weight="700"
+    fill="#8b3a52"
+  >A</text>
+
+  <!-- B in dark -->
+  <text
+    x="33"
+    y="46"
+    font-family="Georgia, serif"
+    font-size="38"
+    font-weight="700"
+    fill="#2a2420"
+    opacity="0.85"
+  >B</text>
+
+</svg>

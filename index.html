@@ -1,76 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./img/favicon.svg" type="image/svg+xml" />
-    <link href="./output.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="./assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link href="./assets/css/styles.css" rel="stylesheet" />
     <title>Anton Bondoc</title>
   </head>
-  <body class="bg-offWhite">
-    <div id="landing" class="flex flex-col h-screen w-screen">
-      <header class="flex items-center justify-center gap-x-32 pt-4">
-        <p
-          class="text-xl font-light underline underline-offset-8 hover:cursor-pointer"
-        >
-          Home
-        </p>
-        <a href="./mission.html"
-          ><p class="text-xl font-light hover:cursor-pointer">Mission</p>
-        </a>
-      </header>
-      <main class="flex flex-grow flex-col items-center justify-center">
-        <h1 class="text-4xl sm:text-5xl text-center mb-2">
-          Anton Oliver Bondoc
-        </h1>
-        <h3 class="text-xl sm:text-2xl font-light text-center">
-          Software Engineer
-        </h3>
-        <div id="socials" class="flex space-x-12 mt-8">
-          <a
-            href="https://web.facebook.com/profile.php?id=61568484585754"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="./img/facebook-brands-solid.svg"
-              alt="MountainHills Facebook Page"
-              class="h-12 hover:scale-105 hover:cursor-pointer"
-          /></a>
-          <a
-            href="https://codnoob.home.blog/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="./img/wordpress-brands-solid.svg"
-              alt="Not Now Cod Noob Blog"
-              class="h-12 hover:scale-105 hover:cursor-pointer"
-          /></a>
-          <a
-            href="https://github.com/MountainHills"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="./img/github-brands-solid.svg"
-              alt="MountainHills GitHub Profile"
-              class="h-12 hover:scale-105 hover:cursor-pointer"
-            />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/anton-bondoc-7231a71b5"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="./img/linkedin-brands-solid.svg"
-              alt="Anton Bondoc LinkedIn Profile"
-              class="h-12 hover:scale-105 hover:cursor-pointer"
-            />
-          </a>
+  <body>
+    <main>
+      <header>
+        <div class="header-top">
+          <h1>Anton Oliver Bondoc</h1>
+          <nav>
+            <a href="./index.html" class="active">home</a>
+            <a href="./coming-soon.html">games</a>
+            <a href="./coming-soon.html">tools</a>
+          </nav>
         </div>
-      </main>
-    </div>
+        <p class="header-sub">Senior Software Engineer</p>
+        <p class="tagline">
+          Backend engineer. Identity, data, and the infrastructure everybody
+          relies on.
+        </p>
+      </header>
+
+      <section id="work">
+        <h2>Work</h2>
+        <div class="work-item">
+          <div class="work-header">
+            <div class="work-left">
+              <div class="company">Maya</div>
+              <div class="role">Senior Software Engineer</div>
+            </div>
+            <div class="work-right">2025 — present</div>
+          </div>
+          <ul class="work-bullets">
+            <li>
+              Handles millions of daily requests across identity and fraud
+              services
+            </li>
+            <li>Owns user profiles and IAM across 5+ microservices</li>
+            <li>
+              Wires up government APIs, credit checks, and fraud detection
+            </li>
+          </ul>
+        </div>
+
+        <div class="work-item">
+          <div class="work-header">
+            <div class="work-left">
+              <div class="company">Samsung Electronics</div>
+              <div class="role">Software Engineer</div>
+            </div>
+            <div class="work-right">2023 — 2025</div>
+          </div>
+          <ul class="work-bullets">
+            <li>Built and optimized APIs for performance and reliability</li>
+            <li>Hardened data security and plugged critical vulnerabilities</li>
+            <li>Ran an internal algorithms workshop for the team</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-list">
+          <div class="project-item">
+            <div class="project-title">
+              <a target="_blank" href="https://github.com/MountainHills/Antika"
+                >antika</a
+              >
+            </div>
+            <div class="project-description">
+              prepares the tools you'll use depending on your workflow
+            </div>
+            <div class="project-tags">
+              <span class="tag">Java</span><span class="tag">CLI</span>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-title">
+              <a target="_blank" href="https://github.com/MountainHills/AnoUlam"
+                >ano-ulam</a
+              >
+            </div>
+            <div class="project-description">
+              a directory of carinderias within your area
+            </div>
+            <div class="project-tags">
+              <span class="tag">Java</span><span class="tag">Spring Boot</span>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-title">
+              <a
+                target="_blank"
+                href="https://github.com/MountainHills/image-to-excel-pixel-art"
+                >image-to-pixel</a
+              >
+            </div>
+            <div class="project-description">
+              turns your image into pixel art
+            </div>
+            <div class="project-tags">
+              <span class="tag">Java</span>
+              <span class="tag">CLI</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact-links">
+          <a
+            target="_blank"
+            href="https://web.facebook.com/profile.php?id=61568484585754"
+            >facebook</a
+          >
+          <a target="_blank" href="https://codnoob.home.blog/">wordpress</a>
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/anton-bondoc-7231a71b5"
+            >linkedin</a
+          >
+          <a target="_blank" href="https://github.com/MountainHills">github</a>
+        </div>
+      </section>
+
+      <footer>built with html.</footer>
+    </main>
   </body>
 </html>
