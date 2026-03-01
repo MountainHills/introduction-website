@@ -315,6 +315,13 @@ footer {
   color: var(--muted);
 }
 
+/* ---- Easter Eggs ---- */
+.egg-trigger {
+  color: inherit;
+  text-decoration: none;
+  cursor: text;
+}
+
 @media (max-width: 500px) {
   .header-top {
     flex-direction: column;
