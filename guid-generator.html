@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link rel="stylesheet" href="/assets/css/tools.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <title>GUID Generator — Anton Bondoc</title>
+    <style>
+      .guid-output {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        transition: border-color 0.15s ease;
+      }
+
+      .guid-output:hover {
+        border-color: var(--accent);
+      }
+
+      .guid-value {
+        font-size: 0.88rem;
+        color: var(--text);
+        letter-spacing: 0.02em;
+        word-break: break-all;
+      }
+
+      .guid-copy {
+        font-size: 0.72rem;
+        color: var(--accent);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        white-space: nowrap;
+        padding: 0;
+        flex-shrink: 0;
+        margin-left: auto;
+        transition: opacity 0.15s ease;
+      }
+
+      .guid-copy:hover {
+        opacity: 0.7;
+      }
+
+      .guid-copy.copied {
+        color: var(--muted);
+      }
+
+      .guid-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        font-family: inherit;
+        font-size: 0.82rem;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        background: var(--surface);
+        color: var(--text);
+        transition:
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+      }
+
+      .btn-primary:hover {
+        opacity: 0.85;
+        color: var(--bg);
+      }
+
+      .guid-list {
+        margin-top: 2rem;
+      }
+
+      .section-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12rem;
+        margin-bottom: 1rem;
+      }
+
+      .count-control {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .count-control label {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .count-control input[type="number"] {
+        font-family: inherit;
+        font-size: 0.82rem;
+        width: 4rem;
+        padding: 0.3rem 0.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        text-align: center;
+      }
+
+      .count-control input[type="number"]:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .empty-state {
+        font-size: 0.85rem;
+        color: var(--muted);
+        padding: 1.5rem 0;
+      }
+
+      .guid-checkbox {
+        width: 16px;
+        height: 16px;
+        border: 1.5px solid var(--border);
+        border-radius: 3px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          border-color 0.15s ease,
+          background 0.15s ease;
+      }
+
+      .guid-checkbox svg {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+      }
+
+      .guid-output.copied-row {
+        border-color: var(--accent);
+      }
+
+      .guid-output.copied-row .guid-checkbox {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .guid-output.copied-row .guid-checkbox svg {
+        opacity: 1;
+      }
+
+      .guid-output.copied-row .guid-value {
+        color: var(--muted);
+      }
+
+      .guid-output.copied-row .guid-copy {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="header-top">
+          <h1>GUID Generator</h1>
+          <nav>
+            <a href="/index.html">home</a>
+            <a href="/coming-soon.html">games</a>
+            <a href="/tools.html" class="active">tools</a>
+          </nav>
+        </div>
+        <p class="header-sub">
+          generate universally unique identifiers. copy and go.
+        </p>
+      </header>
+
+      <div class="count-control">
+        <label for="guid-count">how many?</label>
+        <input type="number" id="guid-count" min="1" max="20" value="1" />
+      </div>
+
+      <div class="guid-actions">
+        <button class="btn btn-primary" onclick="generateGuids()">
+          generate
+        </button>
+        <button class="btn" onclick="copyAll()">copy all</button>
+        <button class="btn" onclick="clearGuids()">clear</button>
+      </div>
+
+      <div class="guid-list">
+        <p class="section-label" id="list-label" style="display: none">
+          results
+        </p>
+        <div id="guid-results">
+          <p class="empty-state">hit generate to get started.</p>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top: 3rem"></div>
+      <a class="back-link" href="/tools.html">back to tools</a>
+
+      <footer>built with html. no frameworks were harmed.</footer>
+    </main>
+
+    <script>
+      function generateGuid() {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+          /[xy]/g,
+          function (c) {
+            const r = (Math.random() * 16) | 0;
+            const v = c === "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+          },
+        );
+      }
+
+      function generateGuids() {
+        const count = Math.min(
+          Math.max(
+            parseInt(document.getElementById("guid-count").value) || 1,
+            1,
+          ),
+          20,
+        );
+        const container = document.getElementById("guid-results");
+        const label = document.getElementById("list-label");
+
+        container.innerHTML = "";
+        label.style.display = "block";
+
+        for (let i = 0; i < count; i++) {
+          const guid = generateGuid();
+          const row = document.createElement("div");
+          row.className = "guid-output";
+          row.innerHTML = `
+            <div class="guid-checkbox">
+              <svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 3L3.5 5.5L8 1" stroke="${getComputedStyle(document.documentElement).getPropertyValue("--bg") || "#f5f0eb"}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="guid-value">${guid}</span>
+            <button class="guid-copy" onclick="copyOne(this, '${guid}')">copy →</button>
+          `;
+          container.appendChild(row);
+        }
+      }
+
+      function copyOne(btn, guid) {
+        navigator.clipboard.writeText(guid).then(() => {
+          const row = btn.closest(".guid-output");
+          row.classList.add("copied-row");
+          btn.textContent = "copied!";
+          setTimeout(() => {
+            btn.textContent = "copy →";
+          }, 1500);
+        });
+      }
+
+      function copyAll() {
+        const values = [...document.querySelectorAll(".guid-value")].map(
+          (el) => el.textContent,
+        );
+        if (!values.length) return;
+        navigator.clipboard.writeText(values.join("\n"));
+      }
+
+      function clearGuids() {
+        document.getElementById("guid-results").innerHTML =
+          '<p class="empty-state">hit generate to get started.</p>';
+        document.getElementById("list-label").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

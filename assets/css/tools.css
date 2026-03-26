@@ -1,0 +1,90 @@
+/* ── Card Grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: border-color 0.15s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: var(--accent);
+}
+
+.card:hover .card-title {
+  color: var(--accent);
+}
+
+.card-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.card-tag {
+  font-size: 0.68rem;
+  padding: 0.1rem 0.45rem;
+  background: var(--border);
+  border-radius: 3px;
+  color: var(--muted);
+}
+
+.card-open {
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-left: auto;
+}
+
+/* ── Unavailable state ── */
+.card.unavailable {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.card-tag.wip {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}

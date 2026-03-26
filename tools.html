@@ -1,272 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tools — Your Name</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link rel="stylesheet" href="./assets/css/tools.css" />
+    <link href="./assets/css/styles.css" rel="stylesheet" />
+    <title>Tools — Anton Bondoc</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="header-top">
+          <h1>Tools</h1>
+          <nav>
+            <a href="/index.html">home</a>
+            <a href="/coming-soon.html">games</a>
+            <a href="/tools.html" class="active">tools</a>
+          </nav>
+        </div>
+        <p class="header-sub">
+          miscellaneous stuff i built because i needed it or just wanted to.
+        </p>
+      </header>
 
-    :root {
-      --bg:      #f5f0eb;
-      --surface: #ede8e3;
-      --border:  #d8d0c8;
-      --text:    #2a2420;
-      --muted:   #7a6f68;
-      --accent:  #8b3a52;
-      --link:    #8b3a52;
-    }
+      <p class="section-label">Available</p>
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Fira Code', monospace;
-      font-weight: 400;
-      line-height: 1.75;
-      padding: 4rem 1.5rem 6rem;
-    }
-
-    main { max-width: 680px; margin: 0 auto; }
-
-    /* ── Header ── */
-    header { margin-bottom: 3rem; }
-
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 0.35rem;
-    }
-
-    header h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; }
-
-    header nav {
-      display: flex;
-      gap: 1.25rem;
-      align-items: baseline;
-    }
-
-    header nav a {
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    header nav a:hover { color: var(--accent); }
-    header nav a.active { color: var(--accent); }
-
-    header p { color: var(--muted); font-size: 0.9rem; }
-
-    /* ── Section label ── */
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-    }
-
-    /* ── Tools Grid ── */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .tool-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      transition: border-color 0.15s ease;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-
-    .tool-card:hover { border-color: var(--accent); }
-    .tool-card:hover .tool-title { color: var(--accent); }
-
-    .tool-emoji {
-      font-size: 1.4rem;
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-
-    .tool-title {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text);
-      transition: color 0.15s ease;
-    }
-
-    .tool-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-      flex: 1;
-    }
-
-    .tool-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .tool-tag {
-      font-size: 0.68rem;
-      padding: 0.1rem 0.45rem;
-      background: var(--border);
-      border-radius: 3px;
-      color: var(--muted);
-    }
-
-    .tool-open {
-      font-size: 0.72rem;
-      color: var(--accent);
-      margin-left: auto;
-    }
-
-    /* ── Unavailable state ── */
-    .tool-card.unavailable {
-      opacity: 0.5;
-      cursor: default;
-      pointer-events: none;
-    }
-
-    .tool-tag.wip {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    /* ── Footer ── */
-    footer { margin-top: 5rem; font-size: 0.75rem; color: var(--border); }
-
-    /* ── Responsive ── */
-    @media (max-width: 500px) {
-      .header-top { flex-direction: column; gap: 0.5rem; }
-      .tools-grid { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-  <main>
-
-    <header>
-      <div class="header-top">
-        <h1>Tools</h1>
-        <nav>
-          <a href="index.html">home</a>
-          <a href="games.html">games</a>
-          <a href="tools.html" class="active">tools</a>
-        </nav>
+      <div class="card-grid">
+        <a class="card" href="/guid-generator.html">
+          <div class="card-emoji">🆔</div>
+          <div class="card-title">GUID Generator</div>
+          <div class="card-desc">
+            Generate RFC 4122 compliant universally unique identifiers.
+          </div>
+          <div class="card-meta">
+            <span class="card-tag">dev</span>
+            <span class="card-open">open →</span>
+          </div>
+        </a>
       </div>
-      <p>miscellaneous stuff i built because i needed it. or just wanted to.</p>
-    </header>
 
-    <p class="section-label">Available</p>
+      <p class="section-label">Coming Soon</p>
 
-    <div class="tools-grid">
-
-      <a class="tool-card" href="tools/bmi-calculator.html">
-        <div class="tool-emoji">⚖️</div>
-        <div class="tool-title">BMI Calculator</div>
-        <div class="tool-desc">Plug in your height and weight. Get a number. Try not to take it personally.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">health</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-      <a class="tool-card" href="tools/spin-the-wheel.html">
-        <div class="tool-emoji">🎡</div>
-        <div class="tool-title">Spin the Wheel</div>
-        <div class="tool-desc">Add options, spin, let fate decide. Great for lunch, terrible for life choices.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">random</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-      <a class="tool-card" href="tools/pomodoro.html">
-        <div class="tool-emoji">🍅</div>
-        <div class="tool-title">Pomodoro Timer</div>
-        <div class="tool-desc">25 minutes of work, 5 minutes of guilt-free slacking. Repeat until done.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">productivity</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-      <a class="tool-card" href="tools/word-counter.html">
-        <div class="tool-emoji">🔤</div>
-        <div class="tool-title">Word Counter</div>
-        <div class="tool-desc">Paste text, get word and character counts. No frills, no nonsense.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">text</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-      <a class="tool-card" href="tools/color-picker.html">
-        <div class="tool-emoji">🎨</div>
-        <div class="tool-title">Color Picker</div>
-        <div class="tool-desc">Pick a color, get the HEX, RGB, and HSL values. Handy when you're deep in CSS.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">design</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-      <a class="tool-card" href="tools/coin-flip.html">
-        <div class="tool-emoji">🪙</div>
-        <div class="tool-title">Coin Flip</div>
-        <div class="tool-desc">Heads or tails. Sometimes that's all you need.</div>
-        <div class="tool-meta">
-          <span class="tool-tag">random</span>
-          <span class="tool-open">open →</span>
-        </div>
-      </a>
-
-    </div>
-
-    <p class="section-label">Coming Soon</p>
-
-    <div class="tools-grid">
-
-      <div class="tool-card unavailable">
-        <div class="tool-emoji">🔐</div>
-        <div class="tool-title">Password Generator</div>
-        <div class="tool-desc">Generate strong, random passwords with custom rules. No storage, ever.</div>
-        <div class="tool-meta">
-          <span class="tool-tag wip">wip</span>
+      <div class="card-grid">
+        <div class="card unavailable">
+          <div class="card-emoji">💰</div>
+          <div class="card-title">Salary Slicer</div>
+          <div class="card-desc">
+            Split your paycheck into defined buckets. Plan your savings and
+            expenses before they happen.
+          </div>
+          <div class="card-meta">
+            <span class="card-tag wip">wip</span>
+          </div>
         </div>
       </div>
 
-      <div class="tool-card unavailable">
-        <div class="tool-emoji">📐</div>
-        <div class="tool-title">Unit Converter</div>
-        <div class="tool-desc">Length, weight, temperature, and more. For when Google feels like overkill.</div>
-        <div class="tool-meta">
-          <span class="tool-tag wip">wip</span>
-        </div>
-      </div>
-
-    </div>
-
-    <footer>built with html. no frameworks were harmed.</footer>
-
-  </main>
-</body>
+      <footer>built with html. no frameworks were harmed.</footer>
+    </main>
+  </body>
 </html>
