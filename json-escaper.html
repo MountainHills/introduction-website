@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link rel="stylesheet" href="/assets/css/tools.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <title>JSON Escaper — Anton Bondoc</title>
+    <style>
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        font-family: "Fira Code", monospace;
+        font-size: 0.85rem;
+        color: var(--text);
+        resize: vertical;
+        margin-bottom: 1.5rem;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .output-container {
+        margin-top: 2rem;
+        display: none;
+      }
+
+      .result-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        word-break: break-all;
+        font-size: 0.85rem;
+        color: var(--text);
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="header-top">
+          <h1>JSON Escaper</h1>
+          <nav>
+            <a href="/index.html">home</a>
+            <a href="/coming-soon.html">games</a>
+            <a href="/tools.html" class="active">tools</a>
+          </nav>
+        </div>
+        <p class="header-sub">
+          escape or unescape json strings for code and configuration files.
+        </p>
+      </header>
+
+      <section>
+        <p class="section-label">Input</p>
+        <textarea
+          id="json-input"
+          placeholder="Paste your string here..."
+        ></textarea>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="process(true)">
+            escape
+          </button>
+          <button class="btn btn-primary" onclick="process(false)">
+            unescape
+          </button>
+          <button class="btn" onclick="clearAll()">clear</button>
+        </div>
+      </section>
+
+      <div id="output-section" class="output-container">
+        <p class="section-label">Result</p>
+        <div class="result-box">
+          <code id="json-output"></code>
+        </div>
+        <button class="btn" style="margin-top: 1rem" onclick="copyResult(this)">
+          copy result
+        </button>
+      </div>
+
+      <div class="divider" style="margin-top: 3rem"></div>
+      <a class="back-link" href="/tools.html">back to tools</a>
+
+      <footer>built with html.</footer>
+    </main>
+
+    <script>
+      function process(shouldEscape) {
+        const input = document.getElementById("json-input").value;
+        const outputSection = document.getElementById("output-section");
+        const outputCode = document.getElementById("json-output");
+
+        if (!input.trim()) return;
+
+        let result = "";
+        if (shouldEscape) {
+          // JSON.stringify handles escaping quotes, newlines, and slashes perfectly.
+          // We slice(1, -1) to remove the surrounding double quotes it adds.
+          result = JSON.stringify(input).slice(1, -1);
+        } else {
+          try {
+            // Wrapping in quotes and parsing lets JS handle the unescaping logic.
+            result = JSON.parse('"' + input + '"');
+          } catch (e) {
+            result =
+              "Error: Could not unescape. Check for malformed escape sequences.";
+          }
+        }
+
+        outputCode.textContent = result;
+        outputSection.style.display = "block";
+      }
+
+      function copyResult(btn) {
+        const text = document.getElementById("json-output").textContent;
+        if (!text) return;
+
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = btn.textContent;
+          btn.textContent = "copied!";
+          setTimeout(() => {
+            btn.textContent = originalText;
+          }, 1500);
+        });
+      }
+
+      function clearAll() {
+        document.getElementById("json-input").value = "";
+        document.getElementById("output-section").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
