@@ -84,6 +84,7 @@
         border: 2px solid var(--border);
         border-radius: 8px;
         overflow: hidden;
+        position: relative;
       }
 
       .cell {
@@ -110,6 +111,44 @@
         display: flex;
         gap: 0.75rem;
       }
+
+      .win-banner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        height: 80px; /* Slimmer than a cell */
+        background: var(--surface); /* Matches your scoreboard/cards */
+        border: 2px solid var(--accent); /* Uses your primary theme color */
+        border-radius: 12px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        z-index: 100;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Softer shadow */
+        pointer-events: none;
+      }
+
+      .banner-emoji {
+        font-size: 2.2rem;
+      }
+
+      .banner-text h2 {
+        font-size: 0.75rem;
+        color: var(--muted); /* Subtle secondary color */
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .banner-text p {
+        font-size: 1.1rem;
+        color: var(--text); /* Standard theme text color */
+        margin: 0;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body>
@@ -131,12 +170,20 @@
       <div class="game-container">
         <div class="scoreboard">
           <div class="score-item">🍪 <span id="score-p1">0</span></div>
-          <div class="score-item">🥟 <span id="score-p2">0</span></div>
+          <div class="score-item">🥖 <span id="score-p2">0</span></div>
         </div>
 
         <div class="status-text" id="status-container"></div>
 
         <div id="board" class="board">
+          <div id="win-overlay" class="win-banner">
+            <span id="winner-emoji" class="banner-emoji"></span>
+            <div class="banner-text">
+              <h2 id="winner-name"></h2>
+              <p id="winner-phrase"></p>
+            </div>
+          </div>
+
           <div class="cell" data-index="0"></div>
           <div class="cell" data-index="1"></div>
           <div class="cell" data-index="2"></div>
@@ -167,18 +214,23 @@
       const statusContainer = document.getElementById("status-container");
       const score1Display = document.getElementById("score-p1");
       const score2Display = document.getElementById("score-p2");
+      const winOverlay = document.getElementById("win-overlay");
+      const winnerName = document.getElementById("winner-name");
+      const winnerPhrase = document.getElementById("winner-phrase");
+      const winEmoji = document.getElementById("winner-emoji");
 
       // --- Audio Setup ---
       const sfxEmpanada = new Audio("/assets/sfx/empanada.wav");
+      const sfxEmpanadaWin = new Audio("/assets/sfx/empanada-win.wav");
       const sfxCookie = new Audio("/assets/sfx/cookie.wav");
-      const sfxEnd = new Audio("/assets/sfx/game-end.wav");
+      const sfxCookieWin = new Audio("/assets/sfx/cookie-win.wav");
       const sfxReset = new Audio("/assets/sfx/reset.wav");
 
       let firstPlayerOfRound = "🍪";
       let currentPlayer = "🍪";
       let gameState = ["", "", "", "", "", "", "", "", ""];
       let gameActive = true;
-      let scores = { "🍪": 0, "🥟": 0 };
+      let scores = { "🍪": 0, "🥖": 0 };
 
       const winConditions = [
         [0, 1, 2],
@@ -246,15 +298,24 @@
           board.style.pointerEvents = "none"; // Stop all further clicks
 
           updateStatus("win");
-
           combo.forEach((i) => cells[i].classList.add("winner"));
-
           scores[currentPlayer]++;
-
           updateScoreboard();
 
-          // PLAY ONLY WIN SOUND
-          sfxEnd.play().catch(() => {});
+          // Set Popup Text
+          winEmoji.textContent = currentPlayer;
+          winnerPhrase.textContent = "ano tara?";
+          if (currentPlayer === "🍪") {
+            winnerName.textContent = "Dubai Chewy Cookie";
+          } else {
+            winnerName.textContent = "Ilocos Empanada";
+          }
+
+          // Show Popup
+          winOverlay.style.display = "flex";
+
+          const winSfx = currentPlayer === "🍪" ? sfxCookieWin : sfxEmpanadaWin;
+          winSfx.play().catch(() => {});
           return; // EXIT FUNCTION: No more sounds will play
         }
 
@@ -262,16 +323,19 @@
         if (!gameState.includes("")) {
           gameActive = false;
           board.style.pointerEvents = "none";
-          updateStatus("draw");
 
-          // PLAY ONLY DRAW SOUND
-          sfxEnd.play().catch(() => {});
-          return; // EXIT FUNCTION
+          // Draw popup text
+          winEmoji.textContent = "🤝";
+          winnerName.textContent = "Walang nanalo!";
+          winnerPhrase.textContent = "hawak mo ang beat!";
+          winOverlay.style.display = "flex"; // Show Popup
+
+          updateStatus("draw");
+          sfxReset.play().catch(() => {}); // Play hawak mo ang beat (reset sound) for draw
+          return;
         }
 
         // --- BRANCH C: NORMAL MOVE ---
-        // If we reach this point, it means won === false and draw === false.
-        // ONLY now do we play the specific player sound.
         if (currentPlayer === "🍪") {
           sfxCookie.play().catch(() => {});
         } else {
@@ -279,18 +343,22 @@
         }
 
         // Switch turns
-        currentPlayer = currentPlayer === "🍪" ? "🥟" : "🍪";
+        currentPlayer = currentPlayer === "🍪" ? "🥖" : "🍪";
         updateStatus("turn");
       }
 
       function updateScoreboard() {
         score1Display.textContent = scores["🍪"];
-        score2Display.textContent = scores["🥟"];
+        score2Display.textContent = scores["🥖"];
       }
 
       function resetGame() {
         sfxReset.play().catch(() => {});
-        firstPlayerOfRound = firstPlayerOfRound === "🍪" ? "🥟" : "🍪";
+
+        // Hide overlay on reset
+        winOverlay.style.display = "none";
+
+        firstPlayerOfRound = firstPlayerOfRound === "🍪" ? "🥖" : "🍪";
         currentPlayer = firstPlayerOfRound;
         gameState = ["", "", "", "", "", "", "", "", ""];
         gameActive = true;
@@ -303,10 +371,10 @@
       }
 
       function resetScores() {
-        scores = { "🍪": 0, "🥟": 0 };
-        firstPlayerOfRound = "🥟";
+        scores = { "🍪": 0, "🥖": 0 };
+        firstPlayerOfRound = "🥖";
         updateScoreboard();
-        resetGame();
+        sfxReset.play().catch(() => {});
       }
 
       cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
