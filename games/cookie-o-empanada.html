@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <title>Cookie o Empanada — Anton Bondoc</title>
+    <style>
+      .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .scoreboard {
+        display: flex;
+        gap: 2rem;
+        padding: 1rem 2rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .score-item span {
+        color: var(--text);
+        font-weight: 600;
+        margin-left: 0.5rem;
+      }
+
+      .status-text {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12rem;
+        height: 1.5rem; /* Fixed height prevents layout jumps */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      /* Turn Animation */
+      .turn-span {
+        display: inline-block;
+        transition: color 0.3s ease;
+      }
+
+      .animate-turn {
+        animation: turn-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes turn-pop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.4);
+          color: var(--accent);
+          text-shadow: 0 0 8px var(--accent);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 8px;
+        width: 100%;
+        max-width: 380px;
+        aspect-ratio: 1 / 1;
+        background-color: var(--border);
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .cell {
+        background-color: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        cursor: pointer;
+        transition: background-color 0.1s ease;
+        user-select: none;
+      }
+
+      .cell:hover {
+        background-color: var(--bg);
+      }
+
+      .cell.winner {
+        background-color: var(--accent);
+        filter: brightness(1.1);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="header-top">
+          <h1>Cookie o Empanada</h1>
+          <nav>
+            <a href="/index.html">home</a>
+            <a href="/games.html" class="active">games</a>
+            <a href="/tools.html">tools</a>
+          </nav>
+        </div>
+        <p class="header-sub">
+          dubai chewy cookie ano tara? ilocos empanada ano tara?
+        </p>
+      </header>
+
+      <div class="game-container">
+        <div class="scoreboard">
+          <div class="score-item">🍪 <span id="score-p1">0</span></div>
+          <div class="score-item">🥟 <span id="score-p2">0</span></div>
+        </div>
+
+        <div class="status-text" id="status-container"></div>
+
+        <div id="board" class="board">
+          <div class="cell" data-index="0"></div>
+          <div class="cell" data-index="1"></div>
+          <div class="cell" data-index="2"></div>
+          <div class="cell" data-index="3"></div>
+          <div class="cell" data-index="4"></div>
+          <div class="cell" data-index="5"></div>
+          <div class="cell" data-index="6"></div>
+          <div class="cell" data-index="7"></div>
+          <div class="cell" data-index="8"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="resetGame()">
+            next round
+          </button>
+          <button class="btn" onclick="resetScores()">reset scores</button>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top: 3rem"></div>
+      <a class="back-link" href="/games.html">back to games</a>
+      <footer>built with html.</footer>
+    </main>
+
+    <script>
+      const cells = document.querySelectorAll(".cell");
+      const board = document.getElementById("board");
+      const statusContainer = document.getElementById("status-container");
+      const score1Display = document.getElementById("score-p1");
+      const score2Display = document.getElementById("score-p2");
+
+      // --- Audio Setup ---
+      const sfxEmpanada = new Audio("/assets/sfx/empanada.wav");
+      const sfxCookie = new Audio("/assets/sfx/cookie.wav");
+      const sfxEnd = new Audio("/assets/sfx/game-end.wav");
+      const sfxReset = new Audio("/assets/sfx/reset.wav");
+
+      let firstPlayerOfRound = "🍪";
+      let currentPlayer = "🍪";
+      let gameState = ["", "", "", "", "", "", "", "", ""];
+      let gameActive = true;
+      let scores = { "🍪": 0, "🥟": 0 };
+
+      const winConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+
+      function updateStatus(type) {
+        if (type === "turn") {
+          statusContainer.innerHTML = `Player <span id="current-player" class="turn-span">${currentPlayer}</span>'s turn`;
+          triggerTurnAnimation();
+        } else if (type === "win") {
+          statusContainer.innerHTML = `<span style="color:var(--accent)">${currentPlayer} wins this round!</span>`;
+        } else if (type === "draw") {
+          statusContainer.textContent = "It's a draw!";
+        }
+      }
+
+      function triggerTurnAnimation() {
+        const playerDisplay = document.getElementById("current-player");
+        if (!playerDisplay) return;
+        playerDisplay.classList.remove("animate-turn");
+        void playerDisplay.offsetWidth;
+        playerDisplay.classList.add("animate-turn");
+      }
+
+      function handleCellClick(e) {
+        const index = e.target.getAttribute("data-index");
+
+        // 1. IMMEDIATE LOCK: Prevent any logic if game is over or cell is taken
+        if (!gameActive || gameState[index] !== "") return;
+
+        // Update state and visual board first (silent)
+        gameState[index] = currentPlayer;
+        e.target.textContent = currentPlayer;
+
+        // 2. NOW evaluate the move
+        checkResult();
+      }
+
+      function checkResult() {
+        let won = false;
+        let combo = [];
+
+        for (let cond of winConditions) {
+          if (
+            gameState[cond[0]] &&
+            gameState[cond[0]] === gameState[cond[1]] &&
+            gameState[cond[0]] === gameState[cond[2]]
+          ) {
+            won = true;
+            combo = cond;
+            break;
+          }
+        }
+
+        // --- BRANCH A: WINNER DETECTED ---
+        if (won) {
+          gameActive = false;
+          board.style.pointerEvents = "none"; // Stop all further clicks
+
+          updateStatus("win");
+
+          combo.forEach((i) => cells[i].classList.add("winner"));
+
+          scores[currentPlayer]++;
+
+          updateScoreboard();
+
+          // PLAY ONLY WIN SOUND
+          sfxEnd.play().catch(() => {});
+          return; // EXIT FUNCTION: No more sounds will play
+        }
+
+        // --- BRANCH B: DRAW DETECTED ---
+        if (!gameState.includes("")) {
+          gameActive = false;
+          board.style.pointerEvents = "none";
+          updateStatus("draw");
+
+          // PLAY ONLY DRAW SOUND
+          sfxEnd.play().catch(() => {});
+          return; // EXIT FUNCTION
+        }
+
+        // --- BRANCH C: NORMAL MOVE ---
+        // If we reach this point, it means won === false and draw === false.
+        // ONLY now do we play the specific player sound.
+        if (currentPlayer === "🍪") {
+          sfxCookie.play().catch(() => {});
+        } else {
+          sfxEmpanada.play().catch(() => {});
+        }
+
+        // Switch turns
+        currentPlayer = currentPlayer === "🍪" ? "🥟" : "🍪";
+        updateStatus("turn");
+      }
+
+      function updateScoreboard() {
+        score1Display.textContent = scores["🍪"];
+        score2Display.textContent = scores["🥟"];
+      }
+
+      function resetGame() {
+        sfxReset.play().catch(() => {});
+        firstPlayerOfRound = firstPlayerOfRound === "🍪" ? "🥟" : "🍪";
+        currentPlayer = firstPlayerOfRound;
+        gameState = ["", "", "", "", "", "", "", "", ""];
+        gameActive = true;
+        board.style.pointerEvents = "auto"; // Unlock clicks
+        cells.forEach((cell) => {
+          cell.textContent = "";
+          cell.classList.remove("winner");
+        });
+        updateStatus("turn");
+      }
+
+      function resetScores() {
+        scores = { "🍪": 0, "🥟": 0 };
+        firstPlayerOfRound = "🥟";
+        updateScoreboard();
+        resetGame();
+      }
+
+      cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
+      updateStatus("turn");
+    </script>
+  </body>
+</html>
